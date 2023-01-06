@@ -20,7 +20,7 @@ import Foundation
             tea  coffee soda    milk  -------> Leaf node
  */
 
-class TreeNode<T> {
+class TreeNode<T: Equatable> {
     var value: T
     var children: [TreeNode] = []
     
@@ -33,6 +33,7 @@ class TreeNode<T> {
     }
 }
 
+// MARK: Depth First Traversal
 /*
  Depth First Traversal - Depth-first search (DFS) is an algorithm for traversing or searching tree or graph data structures. The algorithm starts at the root node (selecting some arbitrary node as the root node in the case of a graph) and explores as far as possible along each branch before backtracking.
  */
@@ -70,6 +71,7 @@ beverages.forEachDepthFirst {
     print($0.value)
 }
 
+// MARK: Level Order Traversal
 /*
  Level Order Traversal - A Level Order Traversal is a traversal which always traverses based on the level of the tree. So, this traversal first traverses the nodes corresponding to Level 0, and then Level 1, and so on, from the root node.
  */
@@ -109,6 +111,22 @@ beverages.forEachLevelOrder({
     print($0.value)
 })
 
+// MARK: Search
+extension TreeNode {
+    func search(_ value: T) -> TreeNode? {
+        var result: TreeNode?
+        
+        forEachLevelOrder({
+            if $0.value == value {
+                result = $0
+            }
+        })
+        return result
+    }
+}
 
+print("\n ----------- Search using Level Order ---------- \n")
+print(beverages.search("Soda")?.value ?? "No node found with the value.")
+print(beverages.search("Cole")?.value ?? "No node found with the value.")
 
 
